@@ -19,7 +19,7 @@ accepts building (number or name) and postcode and will return a full address if
 `function(building, postcode, api_key, failed_response="")`
 
 > building: building number or name,  
-postcode: postcode  
+> postcode: postcode  
 > api_key:  your API licence key  
 > failed_response: (Optional) will be returned as the response string if no match is made.  Defaults to blank string.
 
