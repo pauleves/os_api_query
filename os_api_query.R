@@ -12,7 +12,7 @@ get_address <- function(building, postcode, api_key, failed_response="") {
   
   # build search and request strings & execute 
   building = casefold(building, upper = TRUE)
-  postcode = casefold(postcode, upper = TRUE)
+  postcode = gsub(" ", "", casefold(postcode, upper = TRUE))
   search_string <- paste(building, postcode)
   
   request <- GET(url = OS_PATH, 
@@ -38,9 +38,11 @@ get_address <- function(building, postcode, api_key, failed_response="") {
   
   df <- select(df, ADDRESS, BUILDING_NUMBER, BUILDING_NAME, POSTCODE)
   
+  stripped_postcode = gsub(" ", "", df$POSTCODE)
+  
   if (df$BUILDING_NUMBER != "") {
     # generate checksum to validate against and check response
-    checksum = paste(df$BUILDING_NUMBER, df$POSTCODE)
+    checksum = paste(df$BUILDING_NUMBER, stripped_postcode)
     if (checksum == search_string) {
       return(df$ADDRESS)
     } 
@@ -48,7 +50,7 @@ get_address <- function(building, postcode, api_key, failed_response="") {
   
   if (df$BUILDING_NAME != "") {
     if (str_detect(df$BUILDING_NAME, building) == TRUE && 
-        postcode == df$POSTCODE) {
+        postcode == stripped_postcode) {
       return(df$ADDRESS)
     }
   }
