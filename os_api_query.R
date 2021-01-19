@@ -32,7 +32,7 @@ get_address <- function(building, postcode, api_key, failed_response="") {
   # Build a data frame containing the response
   req <- fromJSON(response)
   df <- req$results$DPA
-  df <- add_shims(df)
+  df <- add_missing_columns(df)
   
   df <- select(df, ADDRESS, BUILDING_NUMBER, BUILDING_NAME,
                SUB_BUILDING_NAME, POSTCODE)
@@ -59,7 +59,7 @@ get_address <- function(building, postcode, api_key, failed_response="") {
   return(failed_response)
 }
 
-add_shims <- function(data) {
+add_missing_columns <- function(data) {
   if (!"BUILDING_NUMBER" %in% colnames(data)) {data$BUILDING_NUMBER = NA}
   if (!"BUILDING_NAME" %in% colnames(data)) {data$BUILDING_NAME = NA}
   if (!"SUB_BUILDING_NAME" %in% colnames(data)) {data$SUB_BUILDING_NAME = NA}
