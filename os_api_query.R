@@ -22,7 +22,11 @@ get_address <- function(building, postcode, api_key, failed_response="") {
                  )
   )
   
-  # request$status_code
+  # STOP if server response status is not 200.
+  if(request$status_code != 200) 
+    stop(paste("Error: Expected 200 Status response from API, received:", 
+               request$status))
+
   response <- content(request, as = "text", encoding = "UTF-8")
   
   # Build a data frame containing the response
