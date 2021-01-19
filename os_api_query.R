@@ -32,27 +32,36 @@ get_address <- function(building, postcode, api_key, failed_response="") {
   # Build a data frame containing the response
   req <- fromJSON(response)
   df <- req$results$DPA
-
-  if (!"BUILDING_NUMBER" %in% colnames(df)) {df$BUILDING_NUMBER = ""}
-  if (!"BUILDING_NAME" %in% colnames(df)) {df$BUILDING_NAME = ""}
+  df <- add_shims(df)
   
-  df <- select(df, ADDRESS, BUILDING_NUMBER, BUILDING_NAME, POSTCODE)
+  df <- select(df, ADDRESS, BUILDING_NUMBER, BUILDING_NAME,
+               SUB_BUILDING_NAME, POSTCODE)
   
   stripped_postcode = gsub(" ", "", df$POSTCODE)
   
-  if (df$BUILDING_NUMBER != "") {
-    # generate checksum to validate against and check response
-    checksum = paste(df$BUILDING_NUMBER, stripped_postcode)
-    if (checksum == search_string) {
+  # check building number match
+  if (!is.na(df$BUILDING_NUMBER)) {
+    if (str_detect(building, df$BUILDING_NUMBER) && 
+      postcode == stripped_postcode) {
       return(df$ADDRESS)
     } 
   }
   
-  if (df$BUILDING_NAME != "") {
-    if (str_detect(df$BUILDING_NAME, building) == TRUE && 
+  # check building name match
+  if (!is.na(df$BUILDING_NAME)) {
+    building_response <-c(df$BUILDING_NAME, df$SUB_BUILDING_NAME)
+    if ((any(str_detect(building_response, building)) || 
+        any(str_detect(building, building_response))) && 
         postcode == stripped_postcode) {
       return(df$ADDRESS)
     }
   }
   return(failed_response)
+}
+
+add_shims <- function(data) {
+  if (!"BUILDING_NUMBER" %in% colnames(data)) {data$BUILDING_NUMBER = NA}
+  if (!"BUILDING_NAME" %in% colnames(data)) {data$BUILDING_NAME = NA}
+  if (!"SUB_BUILDING_NAME" %in% colnames(data)) {data$SUB_BUILDING_NAME = NA}
+  return(data)
 }
