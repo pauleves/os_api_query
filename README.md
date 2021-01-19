@@ -10,7 +10,7 @@ install.packages("tidyverse", "httr", "jsonlite")
 
 ## Set up
 1. Clone repo to local machine
-2. in the `os-query-api` folder, create a `keyfile` document and save the secrest API key for accessing the API.
+2. in the `os-query-api` folder, create a `keyfile` document and save the OS licence key for accessing the API.
 
 ## get_address 
 
