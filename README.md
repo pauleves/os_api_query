@@ -21,6 +21,8 @@ accepts building (number or name) and postcode and will return a full address if
 > building: building number or name,  
 > postcode: postcode  
 > api_key:  your API licence key  
-> failed_response: (Optional) will be returned as the response string if no match is made.  Defaults to blank string.
+> failed_response: (Optional) will be returned as the response string if no match is made.  Defaults to blank string.  
+> stop_on_error: (Optional) When TRUE will cause the function to raise any `stop` errors or exceptions.  Defaults to FALSE, which will return the error text in the match string instead. 
+
 
 See **example.R** file for usage examples:
