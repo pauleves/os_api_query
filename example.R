@@ -7,7 +7,7 @@ source("./os_api_query.R")
 KEY <-readLines("./keyfile")
 
 # call get_address
-result <- c(get_address("133","SE1 8UG", KEY),
+result <- c(get_address("133","SE1 8UG", KEY,"",FALSE),
             get_address("133","SE18UG", KEY),
             get_address("Wellington House","SE1 8UG", KEY),
             get_address("Wellington House","SE18UG", KEY),
