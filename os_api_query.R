@@ -50,8 +50,8 @@ get_address <- function(building, postcode, api_key, failed_response="") {
   # check building name match
   if (!is.na(df$BUILDING_NAME)) {
     building_response <-c(df$BUILDING_NAME, df$SUB_BUILDING_NAME)
-    if ((any(str_detect(building_response, building)) || 
-        any(str_detect(building, building_response))) && 
+    if ((any(str_detect(building_response, building) %in% TRUE) || 
+        any(str_detect(building, building_response) %in% TRUE)) && 
         postcode == stripped_postcode) {
       return(df$ADDRESS)
     }
