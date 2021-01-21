@@ -9,7 +9,7 @@ OS_PATH <- "https://api.ordnancesurvey.co.uk/places/v1/addresses/find?"
 # Parameters: building        - number or name, 
 #             postcode        - postcode with or without spaces
 #             api_key         - OS API license key 
-#             failed_response - optional failure message for unamtched responses
+#             failed_response - optional failure message for unmatched responses
 #             stop_on_error   - optional, STOP when error is encountered.
 #                               FALSE (default) gracefully returns in text.
 #                               TRUE - throws STOP up to calling program.
