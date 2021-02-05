@@ -42,6 +42,10 @@ get_address <- function(building,
     
     # Build a data frame containing the response
     req <- fromJSON(response)
+
+    if(req$header$totalresults == 0)
+      return(failed_response)
+
     df <- req$results$DPA
     df <- add_missing_columns(df)
     
