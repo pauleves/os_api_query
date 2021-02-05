@@ -15,7 +15,8 @@ result <- c(get_address("133","SE1 8UG", KEY,"",FALSE),
             get_address("61","NW9 5DF", KEY),
             get_address("99","SO01 0ZZ", KEY), # should return a blank string
             get_address("99","SO01 0ZZ", KEY, "Nothing Found"),
-            get_address("the meadows","SP5 1EZ", KEY, "Nothing Found")
+            get_address("the meadows","SP5 1EZ", KEY, "Nothing Found"),
+            get_address('999', 'AA1 9ZZ', KEY, "Zero Results")
             )
 
 paste(result)
